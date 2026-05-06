@@ -1,55 +1,78 @@
 let currentPage = 0;
 const pages = document.querySelectorAll(".page");
-let startY = 0;
 let isScrolling = false;
+let startY = 0;
 
 function showPage(index) {
-  if (isScrolling) return;
+  if (isScrolling || index === currentPage) return;
+
   isScrolling = true;
 
-  pages.forEach(p => p.classList.remove("active"));
-  pages[index].classList.add("active");
+  const direction = index > currentPage ? "down" : "up";
+
+  const current = pages[currentPage];
+  const next = pages[index];
+
+  // reset all classes + inline transforms
+  pages.forEach(p => {
+    p.classList.remove("active", "prev");
+    p.style.transform = "";
+  });
+
+  // current stays behind
+  current.classList.add("prev");
+
+  // 🔥 FORCE correct start position
+  if (direction === "down") {
+    next.style.transform = "translateY(100%)";  // from bottom
+  } else {
+    next.style.transform = "translateY(-100%)"; // from top
+  }
+
+  // 🔥 force browser to apply it
+  next.offsetHeight;
+
+  // animate to center
+  next.style.transform = "translateY(0)";
+  next.classList.add("active");
+
+  currentPage = index;
 
   setTimeout(() => {
     isScrolling = false;
-  }, 600);
+  }, 280);
 }
-
-// 🔹 Desktop
+// scroll
 window.addEventListener("wheel", (e) => {
   if (isScrolling) return;
 
   if (e.deltaY > 0 && currentPage < pages.length - 1) {
-    currentPage++;
+    showPage(currentPage + 1);
   } else if (e.deltaY < 0 && currentPage > 0) {
-    currentPage--;
+    showPage(currentPage - 1);
   }
-
-  showPage(currentPage);
 });
 
-// 🔹 Mobile (better detection)
+// touch
 window.addEventListener("touchstart", (e) => {
   startY = e.touches[0].clientY;
 }, { passive: true });
 
 window.addEventListener("touchmove", (e) => {
-  e.preventDefault(); // 🔥 stops normal scrolling
+  e.preventDefault();
 }, { passive: false });
 
 window.addEventListener("touchend", (e) => {
   if (isScrolling) return;
 
-  let endY = e.changedTouches[0].clientY;
-  let diff = startY - endY;
+  const endY = e.changedTouches[0].clientY;
+  const diff = startY - endY;
 
   if (Math.abs(diff) > 50) {
     if (diff > 0 && currentPage < pages.length - 1) {
-      currentPage++;
+      showPage(currentPage + 1);
     } else if (diff < 0 && currentPage > 0) {
-      currentPage--;
+      showPage(currentPage - 1);
     }
-
-    showPage(currentPage);
   }
 });

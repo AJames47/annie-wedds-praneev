@@ -1,9 +1,8 @@
 body {
   margin: 0;
-  overflow: hidden; /* disable normal scroll */
+  overflow: hidden;
   font-family: Arial, sans-serif;
-  background: #0DC5B8;
-  overflow-x: hidden;
+  background: #66F5EC;
 }
 
 .container {
@@ -11,11 +10,25 @@ body {
   height: 100vh;
 }
 
+.bg-gif {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+.page h1 {
+  position: relative;
+  z-index: 1;
+}
+
+/* base state */
 .page {
   position: absolute;
   width: 100%;
-   max-width: 100vw;   /* 🔥 prevents overflow */
-  box-sizing: border-box;
   height: 100%;
   top: 0;
   left: 0;
@@ -23,41 +36,52 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 3rem;
-  color: rgb(0, 0, 0);
   text-align: center;
   padding: 20px;
 
-  opacity: 0;
-  transform: translateY(100%);
-  transition: all 0.6s ease;
+  font-size: 3rem;
+  color: black;
+
+  transform: translateY(100%); /* hidden below */
+  transition: transform 0.28s ease-out;
+  z-index: 0;
 }
 
-/* visible page */
+/* current page */
 .page.active {
-  opacity: 1;
+  transform: translateY(0);
+  z-index: 2;
+}
+
+/* page below (when going up) */
+/*.page.below {
+  transform: translateY(100%);
+}
+
+/* page above (when going down) */
+.page.above {
+  transform: translateY(-100%);
+}*/
+
+/* previous page stays visible behind */
+.page.prev {
   transform: translateY(0);
   z-index: 1;
+  opacity: 0.95;
 }
 
-/* different colors */
-.page:nth-child(1) { background: #66F5EC; }
-.page:nth-child(2) { background: #66F5EC; }
-.page:nth-child(3) { background: #66F5EC; }
-.page:nth-child(4) { background: #66F5EC; }
-.page:nth-child(5) { background: #66F5EC; }
-.page:nth-child(6) { background: #66F5EC; }
-.page:nth-child(7) { background: #66F5EC; }
-.page:nth-child(8) { background: #66F5EC; }
-.page:nth-child(9) { background: #66F5EC; }
-.page:nth-child(10) { background: #66F5EC; }
+/* depth effect ONLY on content */
+.page.prev > * {
+  transform: scale(0.97);
+  transition: transform 0.28s ease-out;
+}
+
+/* colors (unchanged) */
+.page {
+  background: #66F5EC;
+}
 
 h1 {
   font-size: clamp(1.2rem, 5vw, 2.5rem);
-  text-align: center;
   max-width: 90%;
-  margin: 0 auto;
-
-  overflow-wrap: break-word;
-  word-break: break-word;   /*  important */
 }
