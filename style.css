@@ -2,7 +2,7 @@ body {
   margin: 0;
   overflow: hidden; /* disable normal scroll */
   font-family: Arial, sans-serif;
-  background: #00f8a5;
+  background: #0DC5B8;
   overflow-x: hidden;
 }
 
@@ -41,16 +41,16 @@ body {
 }
 
 /* different colors */
-.page:nth-child(1) { background: #30a03f; }
-.page:nth-child(2) { background: #30a03f; }
-.page:nth-child(3) { background: #30a03f; }
-.page:nth-child(4) { background: #30a03f; }
-.page:nth-child(5) { background: #30a03f; }
-.page:nth-child(6) { background: #30a03f; }
-.page:nth-child(7) { background: #30a03f; }
-.page:nth-child(8) { background: #30a03f; }
-.page:nth-child(9) { background: #30a03f; }
-.page:nth-child(10) { background: #30a03f; }
+.page:nth-child(1) { background: #66F5EC; }
+.page:nth-child(2) { background: #66F5EC; }
+.page:nth-child(3) { background: #66F5EC; }
+.page:nth-child(4) { background: #66F5EC; }
+.page:nth-child(5) { background: #66F5EC; }
+.page:nth-child(6) { background: #66F5EC; }
+.page:nth-child(7) { background: #66F5EC; }
+.page:nth-child(8) { background: #66F5EC; }
+.page:nth-child(9) { background: #66F5EC; }
+.page:nth-child(10) { background: #66F5EC; }
 
 h1 {
   font-size: clamp(1.2rem, 5vw, 2.5rem);
